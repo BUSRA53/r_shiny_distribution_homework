@@ -1,0 +1,160 @@
+---
+title: Shiny Giris
+author: Melike Fatma Alkan -
+        Irem Koyunlu -
+        Busra Caliskan -
+        Irem Alkoyunlu -
+        Esmanur Ates 
+output: html_document
+runtime: shiny
+---
+
+
+kaynak:https://canholyavkin.github.io/blog/rk13/r-shiny.html             https://www.youtube.com/watch?v=ztZflaWuIH0&t=25s
+
+Her ne kadar RStudio ile birlikte gelse de, Shiny uygulamalari tasarlamak icin Shiny paketine ihtiyacimiz var. Bunun icin oncelikle paketimizi yukleyelim.
+
+Daha sonra File->New File->R Markdown->Shiny secenegi ile Markdown kisminda Shiny acilir.
+
+Kullanici tarafindan girilebilecek degerler, yazi, sayi, tarih veya bir dosya olabilir. Shiny, her bir tip input icin size hazir widget’lar sunmaktadir. Ornegin;
+yazi girilmesini istediginiz bir kutu koymak isterseniz textInput(),
+tarih girmek isterseniz dateInput(), 
+coktan secimli menu koymak isterseniz selectInput() vb. fonksiyonlarini koymaniz yeterli olur.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+library(shiny)
+
+# dateInput()
+
+Bu kod tekli olarak tarih secme imkani saglar.
+
+```{r}
+dateInput(inputId='DateChoise','Tarih Seciniz')
+
+```
+
+Tarih formati degistirilebilir.
+
+```{r Date-input}
+dateRangeInput(inputId = 'dateRangechoise2',
+               label = 'Tarih Seciniz',
+               format='mm/dd/yyyy'
+               )
+```
+
+# dateRangeInput()
+
+Bu kod ise ikili olarak tarih secme imkani saglar.
+
+```{r}
+dateRangeInput(inputId='DateRangeChoise','Tarih Araligi Seciniz')
+```
+
+
+# textInput()
+
+Kisa metin girmek icin bosluk bu sekilde olusturulur.
+
+```{r}
+textInput(inputId = 'TextSample', label ='Metin Giriniz ')
+
+```
+
+# textAreaInput()
+
+Metin girmek icin daha genis bir bosluga ihtiyacimiz varsa bu kod kullanilir.
+
+```{r}
+textAreaInput(inputId = 'TextAreaSample',label = 'Metin Giriniz')
+```
+
+# passwordInput()
+
+Sifre girmek icin bir bosluk olusturur.Girilen sifre gizli gosterilir.
+
+```{r}
+passwordInput(inputId = 'passwordSample', label = 'Sifreyi Giriniz')
+```
+
+# SelectInput()
+
+Bir deger listesinden bir veya daha fazla oge secmek icin kullanilabilecek bir secim listesi olusturur.
+
+```{r select-input}
+selectInput(
+  inputId = 'ExampleDropDown', label = 'Bir Secim Yapin',
+  choices = list('1. deger'=1,
+                 '2. deger'=2,
+                 '3. deger'=3)
+
+)
+```
+
+# renderPrint()
+
+Olusturulan secim listesinde secmis oldugumuz degere karsilik gelen ciktiyi verir.
+
+```{r print-select-input}
+renderPrint(input$ExampleDropDown
+)
+```
+
+# sliderInput()
+
+Bir araliktan sayisal bir deger secmek icin bir kaydirici pencere araci olusturur.
+Bu kod kaydiriciyi tek tarafli olarak olusturur.
+
+```{r slider-input}
+sliderInput(
+  inputId = 'SliderExample', label = 'Aralik Seciniz',
+  min = 0, max = 100, value = 50
+)
+
+```
+
+Bu kod ile kaydiriciyi cift tarafli olarak degistirmemiz mumkun olacaktir.
+
+```{r}
+sliderInput(
+  inputId = 'SliderExample', label = 'Araliklari Seciniz',
+  min = 0, max = 100, value = c(10,50)
+)
+
+```
+
+# checkboxInput()
+ 
+Tekli secim kutusunu olusturur. 
+ 
+```{r checkbox-input} 
+checkboxInput(inputId = 'CheckExample',
+              label = 'Tekli Secim Kutusu'
+)
+```
+
+# checkboxGroupInput()
+
+Coklu secim kutusunda birden fazla secim yapilabilir.
+
+```{r}
+checkboxGroupInput(
+  inputId = 'CheckGroupSample',
+  label = 'Coklu Secim Kutusu',
+  choices = list('A','B','C')
+)
+
+```
+
+# radioButtons()
+
+Coklu secim kutusunda tek bir secim yapilmasini saglar.
+
+```{r radio-buttons}
+radioButtons(inputId = 'RadioSample', label = 'Secim Yapiniz',
+             choices = list('A','B','C'))
+
+```
+
